@@ -83,7 +83,7 @@ export default function Layout({ children }) {
       </aside>
 
       {/* Topbar — mobile */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200/80 bg-white/90 px-4 py-3 backdrop-blur lg:hidden">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200/80 bg-white px-4 py-3 lg:hidden">
         <Logo />
         <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">Démo</span>
       </header>
@@ -96,7 +96,10 @@ export default function Layout({ children }) {
       </main>
 
       {/* Bottom nav — mobile */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden">
+      <nav
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-slate-200 bg-white lg:hidden"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
         {nav.map((item) => {
           const Icon = item.icon
           const isActive = item.end

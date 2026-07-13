@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import {
   units, bookings, payments, dashboardStats, unitStatus, unitById,
-  unitLabel, nextBookingFor, establishment, fcfa, formatDate, formatLong, TODAY,
+  unitLabel, nextBookingFor, establishment, fcfa, fcfaCompact, formatDate, formatLong, TODAY,
 } from '../data/mock.js'
 import { Card, OccupancyBadge, PaymentBadge, UnitCover } from '../components/ui.jsx'
 import {
@@ -22,7 +22,7 @@ function StatCard({ icon: Icon, tint, label, value, sub, trend }) {
           </span>
         )}
       </div>
-      <div className="mt-4 font-display text-[26px] font-extrabold leading-none tracking-tight text-ink-900">
+      <div className="mt-4 min-w-0 break-words font-display text-xl font-extrabold leading-none tracking-tight text-ink-900 sm:text-[26px]">
         {value}
       </div>
       <div className="mt-1.5 text-sm font-medium text-ink-500">{label}</div>
@@ -72,7 +72,7 @@ export default function Dashboard() {
     <div>
       {/* Hero */}
       <div className="relative mb-6 overflow-hidden rounded-3xl">
-        <img src={establishment.hero} alt={establishment.name} className="h-40 w-full object-cover sm:h-52" />
+        <img src={establishment.hero} alt={establishment.name} fetchPriority="high" decoding="async" className="h-40 w-full object-cover sm:h-52" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900/85 via-ink-900/55 to-ink-900/10" />
         <div className="absolute inset-0 flex flex-col justify-center px-5 sm:px-8">
           <p className="text-xs font-medium text-white/70">{formatLong(TODAY)}</p>
@@ -94,8 +94,8 @@ export default function Dashboard() {
         />
         <StatCard
           icon={IconWallet} tint="bg-indigo-50 text-indigo-600"
-          label="Revenu du mois" value={fcfa(s.revenue)}
-          sub={`${formatDate(TODAY, { month: 'long' })} en cours`} trend="+12%"
+          label="Revenu du mois" value={fcfaCompact(s.revenue)}
+          sub={`${fcfa(s.revenue)} · ${formatDate(TODAY, { month: 'long' })}`} trend="+12%"
         />
         <StatCard
           icon={IconBuilding} tint="bg-emerald-50 text-emerald-600"

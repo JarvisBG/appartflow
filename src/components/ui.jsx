@@ -1,15 +1,31 @@
 // Petits composants d'UI réutilisés sur plusieurs pages.
 import { useUnitPhotos } from '../data/photoStore.js'
 
+// Variante 480px d'une photo intégrée (téléchargée en deux tailles) —
+// les uploads utilisateur (data URLs) sont renvoyés tels quels.
+export function smallPhoto(src) {
+  return src && src.startsWith('/photos/') ? src.replace('.jpg', '-sm.jpg') : src
+}
+
 // Vignette d'une unité : photo uploadée > photo intégrée > dégradé placeholder.
+// <img> lazy-loadée (et non un background CSS) pour ne charger que le visible.
 export function UnitCover({ unit, className = '', rounded = '', children, style }) {
   const uploaded = useUnitPhotos(unit.id)
   const src = uploaded[0] || (unit.photos && unit.photos[0])
-  const bg = src
-    ? { backgroundImage: `url(${src})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-    : { background: unit.cover }
   return (
-    <div className={`relative ${rounded} ${className}`} style={{ ...bg, ...style }}>
+    <div
+      className={`relative overflow-hidden ${rounded} ${className}`}
+      style={{ background: unit.cover, ...style }}
+    >
+      {src && (
+        <img
+          src={smallPhoto(src)}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
       {children}
     </div>
   )

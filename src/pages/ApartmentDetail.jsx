@@ -5,7 +5,7 @@ import {
   bookings, payments, establishment, fcfa, formatDate, formatLong, daysBetween, TODAY,
 } from '../data/mock.js'
 import { useUnitPhotos, addPhotos, removePhoto, fileToDataUrl } from '../data/photoStore.js'
-import { Card, OccupancyBadge, PaymentBadge, ChannelTag } from '../components/ui.jsx'
+import { Card, OccupancyBadge, PaymentBadge, ChannelTag, smallPhoto } from '../components/ui.jsx'
 import {
   IconPin, IconBed, IconRuler, IconStar, IconLogin, IconLogout,
   IconCheck, IconArrowRight, IconWallet, IconBuilding,
@@ -47,7 +47,7 @@ function Gallery({ unit }) {
       {/* Image principale */}
       <div className="relative h-56 overflow-hidden rounded-2xl sm:h-72">
         {hasPhotos ? (
-          <img src={all[current]} alt={`Logement ${unit.number}`} className="h-full w-full object-cover" />
+          <img src={all[current]} alt={`Logement ${unit.number}`} decoding="async" className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center text-white" style={{ background: unit.cover }}>
             <IconBuilding width={30} height={30} />
@@ -80,7 +80,7 @@ function Gallery({ unit }) {
                   i === current ? 'ring-brand-500' : 'ring-transparent hover:ring-slate-200'
                 }`}
               >
-                <img src={src} alt="" className="h-full w-full object-cover" />
+                <img src={smallPhoto(src)} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
               </button>
               {isUploaded && (
                 <button

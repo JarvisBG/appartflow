@@ -24,6 +24,16 @@ export function fcfa(n) {
   return `${NF.format(n)} FCFA`
 }
 
+// Version compacte pour les petites cards de stats (« 5,8 M FCFA »)
+export function fcfaCompact(n) {
+  if (n >= 1_000_000) {
+    const m = (n / 1_000_000).toLocaleString('fr-FR', { maximumFractionDigits: 1 })
+    return `${m} M FCFA`
+  }
+  if (n >= 10_000) return `${Math.round(n / 1000)} k FCFA`
+  return fcfa(n)
+}
+
 export function formatDate(d, opts = { day: 'numeric', month: 'short' }) {
   return new Intl.DateTimeFormat('fr-FR', opts).format(d)
 }
