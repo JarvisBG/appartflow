@@ -76,8 +76,8 @@ export default function Planning() {
       />
 
       <Card className="overflow-hidden">
-        <div className="overflow-x-auto overscroll-x-contain thin-scroll">
-          <div style={{ minWidth: LABEL + gridWidth }}>
+        <div className="gpu-layer overflow-x-auto overscroll-x-contain bg-white thin-scroll">
+          <div className="bg-white" style={{ minWidth: LABEL + gridWidth }}>
             {/* En-tête mois */}
             <div className="flex border-b border-slate-100">
               <div className="sticky left-0 z-20 shrink-0 border-r border-slate-100 bg-white" style={{ width: LABEL }} />
@@ -88,7 +88,7 @@ export default function Planning() {
                     className="border-r border-slate-100 px-3 py-1.5 text-xs font-bold capitalize text-ink-700"
                     style={{ width: m.count * COL }}
                   >
-                    <span className="sticky inline-block" style={{ left: LABEL + 12 }}>{m.label}</span>
+                    {m.label}
                   </div>
                 ))}
               </div>
@@ -132,9 +132,14 @@ export default function Planning() {
               return (
                 <div key={u.id}>
                   {showFloor && (
-                    <div className="border-b border-slate-100 bg-slate-50/80 py-1 text-[11px] font-bold uppercase tracking-wider text-ink-400">
-                      {/* sticky horizontal : le nom d'étage reste lisible pendant le scroll */}
-                      <span className="sticky left-3 inline-block px-1">{floorLabel(u.floor)}</span>
+                    <div className="flex border-b border-slate-100 bg-slate-50">
+                      {/* libellé d'étage dans la colonne sticky standard (gauche) */}
+                      <div
+                        className="sticky left-0 bg-slate-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-ink-400"
+                        style={{ width: LABEL }}
+                      >
+                        {floorLabel(u.floor)}
+                      </div>
                     </div>
                   )}
                   <div className="flex border-b border-slate-100">

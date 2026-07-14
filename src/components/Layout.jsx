@@ -88,9 +88,10 @@ export default function Layout({ children }) {
         <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">Démo</span>
       </header>
 
-      {/* Contenu */}
-      <main className="pb-24 lg:pl-64">
-        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
+      {/* Contenu — fond opaque + stacking context isolé pour éviter que
+          l'affichage d'une page transparaisse sous la suivante */}
+      <main className="relative z-0 min-h-screen bg-canvas pb-24 lg:pl-64" style={{ isolation: 'isolate' }}>
+        <div key={location.pathname} className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
           {children}
         </div>
       </main>

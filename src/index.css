@@ -26,17 +26,39 @@
 
 html {
   -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* clip (et non hidden) : coupe tout débordement horizontal sans créer
+     de conteneur de défilement, donc les position:sticky continuent de marcher */
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-sans);
   background: var(--color-canvas);
   color: var(--color-ink-900);
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fond opaque plein écran : empêche les anciennes "tuiles" GPU d'une page
+   de rester visibles sous la page suivante lors de la navigation (Android). */
+#root {
+  min-height: 100vh;
+  background: var(--color-canvas);
+  isolation: isolate;
 }
 
 .font-display {
   font-family: var(--font-display);
+}
+
+/* Conteneur défilable stable sur mobile : promu sur sa propre couche GPU
+   propre, ce qui supprime le "déchirement" pendant le scroll. */
+.gpu-layer {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Scrollbar discret pour le planning */
