@@ -88,10 +88,11 @@ export default function Layout({ children }) {
         <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">Démo</span>
       </header>
 
-      {/* Contenu — fond opaque, pas de stacking context forcé (les hacks de
-          compositing provoquaient la corruption d'affichage sur Android) */}
+      {/* Contenu — fond opaque, pas de stacking context forcé ni de remount
+          par route (les hacks de compositing et la re-création complète du
+          DOM à chaque navigation aggravaient la corruption GPU sur Android) */}
       <main className="min-h-screen bg-canvas pb-24 lg:pl-64">
-        <div key={location.pathname} className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
+        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
           {children}
         </div>
       </main>
