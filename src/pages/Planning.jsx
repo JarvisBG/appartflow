@@ -125,10 +125,13 @@ export default function Planning() {
             </div>
 
             {/* Lignes des unités (groupées par étage) */}
-            {units.map((u) => {
+            {units.map((u, ui) => {
               const rowBookings = bookings.filter((b) => b.unitId === u.id)
               const showFloor = u.floor !== lastFloor
               lastFloor = u.floor
+              // Moitié basse de la grille : la bulle de survol s'ouvre vers le
+              // haut pour ne pas être coupée par le bas du conteneur défilant.
+              const tipAbove = ui >= units.length / 2
               return (
                 <div key={u.id}>
                   {showFloor && (
@@ -192,7 +195,9 @@ export default function Planning() {
                             onMouseEnter={() => !isMobile && setHover(b.id)}
                             onMouseLeave={() => !isMobile && setHover(null)}
                             onClick={() => setSelected(selected?.id === b.id ? null : b)}
-                            className="absolute top-1/2 flex -translate-y-1/2 cursor-pointer items-center rounded-lg px-2 text-left text-xs font-semibold shadow-sm active:opacity-85"
+                            className={`absolute top-1/2 flex -translate-y-1/2 cursor-pointer items-center rounded-lg px-2 text-left text-xs font-semibold shadow-sm active:opacity-85 ${
+                              hover === b.id ? 'z-30' : ''
+                            }`}
                             style={{
                               left: from * COL + 3,
                               width: (to - from) * COL - 6,
@@ -208,7 +213,11 @@ export default function Planning() {
                           >
                             <span className="min-w-0 flex-1 truncate">{b.guest}</span>
                             {!isMobile && hover === b.id && (
-                              <div className="pointer-events-none absolute left-1/2 top-full z-30 mt-2 w-48 -translate-x-1/2 rounded-xl border border-slate-200 bg-white p-3 text-left shadow-lg">
+                              <div
+                                className={`pointer-events-none absolute left-1/2 z-30 w-48 -translate-x-1/2 rounded-xl border border-slate-200 bg-white p-3 text-left shadow-lg ${
+                                  tipAbove ? 'bottom-full mb-2' : 'top-full mt-2'
+                                }`}
+                              >
                                 <div className="text-sm font-bold text-ink-900">{b.guest}</div>
                                 <div className="mt-1 text-xs text-ink-500">
                                   {new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short' }).format(b.start)} →{' '}
