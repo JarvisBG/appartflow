@@ -76,7 +76,7 @@ export default function Planning() {
       />
 
       <Card className="overflow-hidden">
-        <div className="gpu-layer overflow-x-auto overscroll-x-contain bg-white thin-scroll">
+        <div className="overflow-x-auto overscroll-x-contain bg-white thin-scroll">
           <div className="bg-white" style={{ minWidth: LABEL + gridWidth }}>
             {/* En-tête mois */}
             <div className="flex border-b border-slate-100">

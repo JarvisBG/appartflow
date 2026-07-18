@@ -24,41 +24,33 @@
   --color-canvas: #f7f9fb;
 }
 
+/* NB : pas d'overflow-x sur <html> — overflow clip/hidden sur l'élément
+   racine déclenche des bugs de rendu du compositeur sur Chrome Android
+   (tuiles d'anciennes pages qui restent affichées, artefacts au scroll). */
 html {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* clip (et non hidden) : coupe tout débordement horizontal sans créer
-     de conteneur de défilement, donc les position:sticky continuent de marcher */
-  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-sans);
   background: var(--color-canvas);
   color: var(--color-ink-900);
+  /* clip (et non hidden) : coupe un éventuel débordement horizontal sans
+     créer de conteneur de défilement, donc position:sticky marche toujours */
   overflow-x: clip;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Fond opaque plein écran : empêche les anciennes "tuiles" GPU d'une page
-   de rester visibles sous la page suivante lors de la navigation (Android). */
+/* Fond opaque plein écran sous toutes les pages. */
 #root {
   min-height: 100vh;
   background: var(--color-canvas);
-  isolation: isolate;
 }
 
 .font-display {
   font-family: var(--font-display);
-}
-
-/* Conteneur défilable stable sur mobile : promu sur sa propre couche GPU
-   propre, ce qui supprime le "déchirement" pendant le scroll. */
-.gpu-layer {
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 /* Scrollbar discret pour le planning */

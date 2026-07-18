@@ -72,7 +72,7 @@ export default function Dashboard() {
     <div>
       {/* Hero */}
       <div className="relative mb-6 overflow-hidden rounded-3xl">
-        <img src={establishment.hero} alt={establishment.name} fetchPriority="high" decoding="async" className="h-40 w-full object-cover sm:h-52" />
+        <img src={establishment.hero} alt={establishment.name} fetchpriority="high" decoding="async" className="h-40 w-full object-cover sm:h-52" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900/85 via-ink-900/55 to-ink-900/10" />
         <div className="absolute inset-0 flex flex-col justify-center px-5 sm:px-8">
           <p className="text-xs font-medium text-white/70">{formatLong(TODAY)}</p>
